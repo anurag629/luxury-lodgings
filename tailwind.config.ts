@@ -88,6 +88,11 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+			boxShadow: {
+				'glass': '0 8px 32px 0 hsla(222 84% 4.9% / 0.37)',
+				'glow': '0 0 40px hsla(250 100% 70% / 0.3)',
+				'card': '0 10px 30px -10px hsla(222 84% 4.9% / 0.5)'
+			},
 			keyframes: {
 				'accordion-down': {
 					from: {
