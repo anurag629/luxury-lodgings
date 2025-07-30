@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, MapPin } from 'lucide-react';
+import { Menu, X, Phone, MapPin, Sparkles } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,6 +17,11 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
   const navItems = [
     { path: '/', label: 'Home' },
     { path: '/properties', label: 'Properties' },
@@ -28,92 +34,142 @@ const Header = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'glass backdrop-blur-glass' : 'bg-transparent'
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      isScrolled ? 'nav-blur shadow-premium' : 'bg-transparent'
     }`}>
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 lg:px-6">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-primary-gradient rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-xl">A1</span>
+          {/* Premium Logo */}
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="relative">
+              <div className="w-12 h-12 bg-primary-gradient rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-all duration-300">
+                <span className="text-primary-foreground font-bold text-xl">A1</span>
+              </div>
+              <Sparkles className="absolute -top-1 -right-1 w-4 h-4 text-primary animate-pulse" />
             </div>
-            <span className="text-xl font-bold text-gradient">A One PG</span>
+            <div className="hidden sm:block">
+              <span className="text-2xl font-bold text-gradient">A One PG</span>
+              <div className="text-xs text-muted-foreground font-medium tracking-wider">PREMIUM LIVING</div>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`relative font-medium transition-all duration-300 ${
+                className={`nav-item px-4 py-2 rounded-xl transition-all duration-300 ${
                   isActive(item.path)
-                    ? 'text-primary'
-                    : 'text-foreground hover:text-primary'
+                    ? 'text-primary bg-primary/10 active'
+                    : 'text-foreground hover:text-primary hover:bg-glass/50'
                 }`}
               >
                 {item.label}
-                {isActive(item.path) && (
-                  <div className="absolute -bottom-2 left-0 right-0 h-0.5 bg-primary-gradient rounded-full" />
-                )}
               </Link>
             ))}
           </nav>
 
           {/* Contact Info & CTA */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-              <Phone className="w-4 h-4" />
-              <span>+91 98765 43210</span>
+          <div className="hidden lg:flex items-center space-x-6">
+            <div className="flex items-center space-x-4 text-sm">
+              <div className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors duration-300">
+                <Phone className="w-4 h-4" />
+                <span className="font-medium">+91 98765 43210</span>
+              </div>
+              <div className="w-px h-6 bg-glass-border"></div>
+              <div className="flex items-center space-x-2 text-muted-foreground">
+                <MapPin className="w-4 h-4" />
+                <span className="font-medium">Gurgaon</span>
+              </div>
             </div>
-            <Link to="/contact" className="btn-primary">
+            <Link to="/contact" className="btn-primary text-sm">
               Book Now
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Enhanced Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 rounded-xl glass border-glass-border"
+            className="lg:hidden relative p-3 rounded-xl glass border-glass-border hover:bg-glass/80 transition-all duration-300"
+            aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <div className="relative w-6 h-6">
+              <Menu 
+                className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${
+                  isMenuOpen ? 'rotate-180 opacity-0' : 'rotate-0 opacity-100'
+                }`} 
+              />
+              <X 
+                className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${
+                  isMenuOpen ? 'rotate-0 opacity-100' : 'rotate-180 opacity-0'
+                }`} 
+              />
+            </div>
           </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="lg:hidden mt-4 pb-6">
-            <nav className="flex flex-col space-y-4">
-              {navItems.map((item) => (
+        {/* Enhanced Mobile Navigation */}
+        <div className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${
+          isMenuOpen 
+            ? 'max-h-screen opacity-100 pb-6' 
+            : 'max-h-0 opacity-0 pb-0'
+        }`}>
+          <div className="glass rounded-2xl mt-4 p-6 border border-glass-border/50">
+            <nav className="space-y-2">
+              {navItems.map((item, index) => (
                 <Link
                   key={item.path}
                   to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`py-2 px-4 rounded-xl transition-all duration-300 ${
+                  className={`block py-3 px-4 rounded-xl transition-all duration-300 font-medium ${
                     isActive(item.path)
-                      ? 'bg-primary/20 text-primary'
-                      : 'text-foreground hover:bg-muted'
+                      ? 'bg-primary/20 text-primary border border-primary/20'
+                      : 'text-foreground hover:bg-glass/50 hover:text-primary border border-transparent'
                   }`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {item.label}
                 </Link>
               ))}
-              <div className="flex flex-col space-y-3 pt-4 border-t border-glass-border">
-                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                  <Phone className="w-4 h-4" />
-                  <span>+91 98765 43210</span>
-                </div>
-                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                  <MapPin className="w-4 h-4" />
-                  <span>Gurgaon, Haryana</span>
-                </div>
-                <Link to="/contact" className="btn-primary" onClick={() => setIsMenuOpen(false)}>
-                  Book Now
-                </Link>
-              </div>
             </nav>
+            
+            <div className="mt-6 pt-6 border-t border-glass-border/50 space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3 text-muted-foreground">
+                  <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                    <Phone className="w-4 h-4 text-primary" />
+                  </div>
+                  <div>
+                    <div className="font-medium text-foreground">Call Us</div>
+                    <div className="text-sm">+91 98765 43210</div>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3 text-muted-foreground">
+                  <div className="w-10 h-10 bg-secondary/20 rounded-xl flex items-center justify-center">
+                    <MapPin className="w-4 h-4 text-secondary" />
+                  </div>
+                  <div>
+                    <div className="font-medium text-foreground">Location</div>
+                    <div className="text-sm">Gurgaon, Haryana</div>
+                  </div>
+                </div>
+              </div>
+              <Link 
+                to="/contact" 
+                className="btn-primary w-full text-center justify-center"
+              >
+                Book Now
+              </Link>
+            </div>
           </div>
+        </div>
+
+        {/* Mobile Menu Backdrop */}
+        {isMenuOpen && (
+          <div 
+            className="lg:hidden fixed inset-0 bg-background/80 backdrop-blur-sm -z-10 transition-opacity duration-300"
+            onClick={() => setIsMenuOpen(false)}
+          />
         )}
       </div>
     </header>
