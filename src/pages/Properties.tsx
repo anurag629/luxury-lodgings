@@ -151,7 +151,7 @@ const Properties = () => {
 
         {/* Search & Filters */}
         <div className="glass-card mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="space-y-4">
             {/* Search */}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -164,43 +164,51 @@ const Properties = () => {
               />
             </div>
 
-            {/* Gender Filter */}
-            <select
-              value={selectedGender}
-              onChange={(e) => setSelectedGender(e.target.value)}
-              className="w-full px-4 py-3 bg-input rounded-xl border border-glass-border focus:border-primary outline-none transition-colors"
-            >
-              <option value="all">All Genders</option>
-              <option value="male">Male Only</option>
-              <option value="female">Female Only</option>
-              <option value="both">Co-living</option>
-            </select>
+            {/* Filters Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {/* Gender Filter */}
+              <select
+                value={selectedGender}
+                onChange={(e) => setSelectedGender(e.target.value)}
+                className="w-full px-4 py-3 bg-input rounded-xl border border-glass-border focus:border-primary outline-none transition-colors"
+              >
+                <option value="all">All Genders</option>
+                <option value="male">Male Only</option>
+                <option value="female">Female Only</option>
+                <option value="both">Co-living</option>
+              </select>
 
-            {/* Occupancy Filter */}
-            <select
-              value={selectedOccupancy}
-              onChange={(e) => setSelectedOccupancy(e.target.value)}
-              className="w-full px-4 py-3 bg-input rounded-xl border border-glass-border focus:border-primary outline-none transition-colors"
-            >
-              <option value="all">All Occupancy</option>
-              <option value="1">1 Sitting</option>
-              <option value="2">2 Sitting</option>
-              <option value="3">3 Sitting</option>
-            </select>
+              {/* Occupancy Filter */}
+              <select
+                value={selectedOccupancy}
+                onChange={(e) => setSelectedOccupancy(e.target.value)}
+                className="w-full px-4 py-3 bg-input rounded-xl border border-glass-border focus:border-primary outline-none transition-colors"
+              >
+                <option value="all">All Occupancy</option>
+                <option value="1">1 Sitting</option>
+                <option value="2">2 Sitting</option>
+                <option value="3">3 Sitting</option>
+              </select>
 
-            {/* Price Range */}
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-muted-foreground">₹{priceRange[0]}</span>
-              <input
-                type="range"
-                min="5000"
-                max="15000"
-                step="500"
-                value={priceRange[0]}
-                onChange={(e) => setPriceRange([parseInt(e.target.value), priceRange[1]])}
-                className="flex-1"
-              />
-              <span className="text-sm text-muted-foreground">₹{priceRange[1]}</span>
+              {/* Price Range */}
+              <div className="space-y-2">
+                <div className="text-sm text-muted-foreground text-center">
+                  Price Range: ₹{priceRange[0]} - ₹{priceRange[1]}
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs text-muted-foreground">₹5k</span>
+                  <input
+                    type="range"
+                    min="5000"
+                    max="15000"
+                    step="500"
+                    value={priceRange[0]}
+                    onChange={(e) => setPriceRange([parseInt(e.target.value), priceRange[1]])}
+                    className="flex-1"
+                  />
+                  <span className="text-xs text-muted-foreground">₹15k</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -216,35 +224,35 @@ const Properties = () => {
         </div>
 
         {/* Properties Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-6">
           {filteredProperties.map((property, index) => (
             <div
               key={property.id}
-              className="glass-card overflow-hidden hover:scale-105 transition-all duration-300 animate-fade-in-up"
+              className="glass-card overflow-hidden hover:scale-[1.02] transition-all duration-300 animate-fade-in-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex flex-col md:grid md:grid-cols-2 gap-4 md:gap-6">
                 {/* Property Image */}
-                <div className="relative h-64 md:h-full">
+                <div className="relative h-48 sm:h-64 md:h-full">
                   <img
                     src={property.image}
                     alt={property.name}
                     className="w-full h-full object-cover rounded-xl"
                   />
-                  <div className="absolute top-4 left-4 bg-success/90 text-success-foreground px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="absolute top-3 left-3 bg-success/90 text-success-foreground px-2 py-1 rounded-full text-xs font-medium">
                     {property.available} Available
                   </div>
-                  <div className="absolute top-4 right-4 bg-background/90 text-foreground px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="absolute top-3 right-3 bg-background/90 text-foreground px-2 py-1 rounded-full text-xs font-medium">
                     {property.occupancy.join(', ')} Sitting
                   </div>
-                  <div className="absolute bottom-4 left-4 right-4">
+                  <div className="absolute bottom-3 left-3 right-3">
                     <div className="flex space-x-1">
                       {property.gallery.slice(0, 3).map((img, imgIndex) => (
-                        <div key={imgIndex} className="w-12 h-12 rounded-lg overflow-hidden border-2 border-white">
+                        <div key={imgIndex} className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden border-2 border-white">
                           <img src={img} alt="" className="w-full h-full object-cover" />
                         </div>
                       ))}
-                      <div className="w-12 h-12 rounded-lg bg-background/90 border-2 border-white flex items-center justify-center text-xs font-medium">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-background/90 border-2 border-white flex items-center justify-center text-xs font-medium">
                         +{property.gallery.length - 3}
                       </div>
                     </div>
@@ -254,8 +262,8 @@ const Properties = () => {
                 {/* Property Details */}
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-semibold text-foreground">{property.name}</h3>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                      <h3 className="text-lg sm:text-xl font-semibold text-foreground">{property.name}</h3>
                       <div className="flex items-center space-x-1">
                         <Star className="w-4 h-4 text-warning fill-current" />
                         <span className="text-sm font-medium">{property.rating}</span>
@@ -264,7 +272,7 @@ const Properties = () => {
                     </div>
                     
                     <div className="flex items-center space-x-2 text-muted-foreground">
-                      <MapPin className="w-4 h-4" />
+                      <MapPin className="w-4 h-4 flex-shrink-0" />
                       <span className="text-sm">{property.address}</span>
                     </div>
                   </div>
@@ -274,7 +282,7 @@ const Properties = () => {
                   {/* Features */}
                   <div className="space-y-2">
                     <h4 className="text-sm font-medium text-foreground">Key Features</h4>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1">
                       {property.features.slice(0, 4).map((feature, featureIndex) => (
                         <span
                           key={featureIndex}
@@ -299,10 +307,10 @@ const Properties = () => {
                   </div>
 
                   {/* Price & Action */}
-                  <div className="flex items-center justify-between pt-4 border-t border-glass-border">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-glass-border">
                     <div className="space-y-1">
                       <div className="flex items-center space-x-2">
-                        <span className="text-2xl font-bold text-primary">₹{property.price.toLocaleString()}</span>
+                        <span className="text-xl sm:text-2xl font-bold text-primary">₹{property.price.toLocaleString()}</span>
                         {property.originalPrice > property.price && (
                           <span className="text-sm text-muted-foreground line-through">
                             ₹{property.originalPrice.toLocaleString()}
@@ -311,11 +319,11 @@ const Properties = () => {
                       </div>
                       <span className="text-xs text-muted-foreground">per month</span>
                     </div>
-                    <div className="flex space-x-2">
-                      <button className="btn-secondary text-sm py-2 px-4">
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <button className="btn-secondary text-sm py-2 px-4 w-full sm:w-auto">
                         View Details
                       </button>
-                      <button className="btn-primary text-sm py-2 px-4">
+                      <button className="btn-primary text-sm py-2 px-4 w-full sm:w-auto">
                         Book Now
                       </button>
                     </div>

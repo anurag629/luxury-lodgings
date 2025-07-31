@@ -304,28 +304,30 @@ const Amenities = () => {
 
         {/* Category Filter */}
         <div className="flex justify-center mb-12">
-          <div className="glass-card p-2 inline-flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
-                  selectedCategory === category.id
-                    ? 'bg-primary text-primary-foreground shadow-glow'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                }`}
-              >
-                {category.name}
-                <span className="ml-2 text-xs bg-white/20 px-2 py-1 rounded-full">
-                  {category.count}
-                </span>
-              </button>
-            ))}
+          <div className="glass-card p-2 w-full max-w-4xl">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`px-3 py-2 rounded-xl font-medium transition-all duration-300 text-center ${
+                    selectedCategory === category.id
+                      ? 'bg-primary text-primary-foreground shadow-glow'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                  }`}
+                >
+                  <div className="truncate">{category.name}</div>
+                  <div className="text-xs bg-white/20 px-1 py-0.5 rounded-full mt-1 inline-block">
+                    {category.count}
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Amenities Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-16">
           {filteredAmenities.map((amenity, index) => (
             <div
               key={index}

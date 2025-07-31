@@ -116,12 +116,12 @@ const Home = () => {
                 AI-powered security, and flexible living solutions crafted for the elite.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-6 justify-center pt-6">
-                <Link to="/properties" className="btn-primary text-lg group">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center pt-6 max-w-md sm:max-w-none mx-auto">
+                <Link to="/properties" className="btn-primary text-lg group w-full sm:w-auto justify-center">
                   Explore Premium Properties
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <button className="btn-secondary text-lg group">
+                <button className="btn-secondary text-lg group w-full sm:w-auto justify-center">
                   <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                   Virtual Tour
                 </button>
@@ -172,7 +172,7 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {properties.map((property, index) => (
               <div
                 key={index}
@@ -337,9 +337,9 @@ const Home = () => {
                 ))}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 pt-6">
-                <Link to="/about" className="btn-primary">Discover Our Story</Link>
-                <Link to="/contact" className="btn-secondary">Schedule Visit</Link>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-6">
+                <Link to="/about" className="btn-primary w-full sm:w-auto justify-center">Discover Our Story</Link>
+                <Link to="/contact" className="btn-secondary w-full sm:w-auto justify-center">Schedule Visit</Link>
               </div>
             </div>
 
