@@ -343,6 +343,16 @@
   }
   
   .btn-primary, .btn-secondary {
-    @apply px-6 py-3;
+    @apply px-3 py-2 text-xs;
+    min-width: auto;
+    height: 32px;
+  }
+  
+  /* Ensure buttons don't overflow */
+  .btn-primary, .btn-secondary, button {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
 }
