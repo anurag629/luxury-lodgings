@@ -60,14 +60,10 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+## Deploy
 
-Simply open [Lovable](https://lovable.dev/projects/906ae511-feed-47bc-9b86-8fce162cb328) and click on Share -> Publish.
+The site runs on Cloudflare Workers (static assets) at https://luxury-lodgings.demo.codercops.com.
+Workers Builds deploys every push to `main` to the `demo-luxury-lodgings` Worker. Pushes to other
+branches only run the build as a check; nothing else gets deployed.
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+To deploy by hand, run `npx wrangler login` once, then `npm run deploy`.

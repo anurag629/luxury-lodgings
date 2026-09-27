@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "demo-luxury-lodgings",
+  // A static Vite build. Paths without a matching file get index.html, so
+  // client-side routes survive a reload.
+  "compatibility_date": "2026-09-27",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  },
+  "observability": {
+    "enabled": true
+  },
+  // A Workers custom domain: Cloudflare creates the DNS record and the certificate.
+  "routes": [
+    { "pattern": "luxury-lodgings.demo.codercops.com", "custom_domain": true }
+  ],
+  "workers_dev": false,
+  // Production is this demo's only environment, so no per-branch Preview URLs.
+  "preview_urls": false
+}
